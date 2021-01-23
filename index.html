@@ -1,0 +1,42 @@
+  <html lang="en">
+
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" type="text/css" href="css/styles.css">
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+      <title>Fish Extinction</title>
+  </head>
+
+
+  <body id="body" class="dark">
+      <div class="w3-margin">
+          <h1>Fish Extinction</h1>
+          <p id=fishCounter></p>
+          <p id=moneyCounter></p>
+          <div class="tab">
+              <button class="tablinks" onclick="openTab(event, 'Fish')">Fish</button>
+              <button class="tablinks" onclick="openTab(event, 'Shop')">Shop</button>
+              <button class="tablinks" onclick="openTab(event, 'Areas')">Areas</button>
+          </div>
+          <div id="Fish" class="tabcontent">
+              <br>
+              <div id="myProgress">
+                  <div id="myBar"></div>
+              </div>
+              <br>
+              <button class="button" onclick="startFishing()" id="fishStatus"></button>
+              <button class="button" onclick="sellFunction()" id="sellNumber"></button>
+          </div>
+          <div id="Shop" class="tabcontent">
+              <h2>Welcome to the Shop!</h4>
+                <button class="button" onclick="shop(1)" id="rodUpgrade">Beginner's Rod</button>
+          </div>
+      </div>
+      <script src="index.js"></script>
+      </div>
+  </body>
+
+
+  </html>

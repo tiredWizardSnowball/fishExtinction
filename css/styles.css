@@ -20,6 +20,10 @@
     margin: 4px 2px;
     cursor: pointer;
   }
+  .settingspos {
+      position: absolute;
+      right: 17px;
+  }
   .tab button {
     background-color: inherit;
     float: left;

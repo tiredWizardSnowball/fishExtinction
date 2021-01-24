@@ -1,5 +1,5 @@
 var fish = 0
-var gold = 100000
+var gold = 0
 var fishing = 0
 var i = 0
 var fishingText = "Start Fishing"

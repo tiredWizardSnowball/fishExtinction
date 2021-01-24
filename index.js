@@ -1,6 +1,6 @@
 var gameData = {
 fish: 0,
-gold: 10000,
+gold: 0,
 rod: 0
 }
 function loadGameData() {

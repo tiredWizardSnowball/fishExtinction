@@ -40,11 +40,11 @@ function startFishing() {
         function frame() {
             if (fishingSpeed >= 100) {
                 elem.style.width = 100 + "%";
-                gameData.fish = gameData.fish + (fishingSpeed*0.01)
+                gameData.fish = gameData.fish + (fishingSpeed*0.01) * doublerModifier
             }
             if (width >= 100 && fishingSpeed < 100) {
                 i = 0
-                gameData.fish++
+                gameData.fish = gameData.fish + 1*doublerModifier[doubler]
                 width = 0
                 elem.style.width = 0
             } else if (fishingSpeed < 100) {
@@ -171,7 +171,7 @@ function update() {
     var element = document.getElementById("moneyCounter")
     element.innerHTML = "You have " + gameData.gold + " gold!"
     var element = document.getElementById("sellNumber")
-    element.innerHTML = "Sell for " + gameData.fish * 2 + " gold!"
+    element.innerHTML = "Sell for " + gameData.fish * sellModifier[sell] + " gold!"
     if (gameData.rod == 0) {
         var element = document.getElementById("rodUpgrade")
         element.innerHTML = "Beginner Rod (" + rodCost[gameData.rod] + " gold)"

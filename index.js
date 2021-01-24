@@ -1,16 +1,23 @@
-var fish = 0
-var gold = 0
+var gameData = {
+fish: 0,
+gold: 10000,
+rod: 0
+}
+function loadGameData() {
+    var gameDataSave = JSON.parse(localStorage.getItem("gameDataSave"))
+    if(gameDataSave != null){
+        gameData = gameDataSave
+    }
+}
+loadGameData()
 var fishing = 0
 var i = 0
 var fishingText = "Start Fishing"
 var id = null
 var width = 0
-var fishingSpeed = 1
-var rodModifier = 1
-var rod = 0
+var rodModifier = [1,2,5,50,100,1000]
 var rodCost = [50, 200, 1000, 5000, 20000]
 var addFish = null
-
 function startFishing() {
         if (i == 0 && fishing == 0) {
             fishingText = "Stop Fishing"
@@ -19,17 +26,17 @@ function startFishing() {
             id = setInterval(frame, 10)
 
             function frame() {
-                if (rodModifier >= 100) {
+                if (rodModifier[gameData.rod] >= 100) {
                     elem.style.width = 100 + "%";
-                    fish = fish + (rodModifier * 0.01)
+                    gameData.fish = gameData.fish + (rodModifier[gameData.rod] * 0.01)
                 }
-                if (width >= 100 && rodModifier <= 100) {
+                if (width >= 100 && rodModifier[gameData.rod] < 100) {
                     i = 0
-                    fish++
+                    gameData.fish++
                     width = 0
                     elem.style.width = 0
-                } else if (rodModifier <= 100) {
-                    width = width + fishingSpeed
+                } else if (rodModifier[gameData.rod] < 100) {
+                    width = width + rodModifier[gameData.rod]
                     elem.style.width = width + "%"
                 }
             }
@@ -45,26 +52,21 @@ function startFishing() {
 
 function shop(itemnumber) {
     if (itemnumber == 1) {
-        if (rod == 0 && gold >= rodCost[rod]) {
-            gold = gold - rodCost[rod]
-            rodModifier = 2
-            rod++
-        } else if (rod == 1 && gold >= rodCost[rod]) {
-            gold = gold - rodCost[rod]
-            rodModifier = 5
-            rod++
-        } else if (rod == 2 && gold >= rodCost[rod]) {
-            gold = gold - rodCost[rod]
-            rodModifier = 50
-            rod++
-        } else if (rod == 3 && gold >= rodCost[rod]) {
-            gold = gold - rodCost[rod]
-            rodModifier = 100
-            rod++
-        } else if (rod == 4 && gold >= rodCost[rod]) {
-            gold = gold - rodCost[rod]
-            rodModifier = 1000
-            rod++
+        if (gameData.rod == 0 && gameData.gold >= rodCost[gameData.rod]) {
+            gameData.gold = gameData.gold - rodCost[gameData.rod]
+            gameData.rod++
+        } else if (gameData.rod == 1 && gameData.gold >= rodCost[gameData.rod]) {
+            gameData.gold = gameData.gold - rodCost[gameData.rod]
+            gameData.rod++
+        } else if (gameData.rod == 2 && gameData.gold >= rodCost[gameData.rod]) {
+            gameData.gold = gameData.gold - rodCost[gameData.rod]
+            gameData.rod++
+        } else if (gameData.rod == 3 && gameData.gold >= rodCost[gameData.rod]) {
+            gameData.gold = gameData.gold - rodCost[gameData.rod]
+            gameData.rod++
+        } else if (gameData.rod == 4 && gameData.gold >= rodCost[gameData.rod]) {
+            gameData.gold = gameData.gold - rodCost[gameData.rod]
+            gameData.rod++
         }
     }
     if (itemnumber == 2) {
@@ -79,11 +81,11 @@ function shop(itemnumber) {
 }
 
 function sellFunction() {
-    gold = gold + (fish * 2)
-    fish = 0
+    gameData.gold = gameData.gold + (gameData.fish * 2)
+    gameData.fish = 0
 }
 
-function openTab(evt, tabName) {
+function openTab(tabName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
@@ -94,39 +96,44 @@ function openTab(evt, tabName) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
     document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " active";
+    event.currentTarget.className += " active";
 }
 var update = setInterval(update, 10)
-
+var save = setInterval(saveFunction, 1000)
+function saveFunction(){
+    saveGameData()
+}
 function update() {
-    fishingSpeed = 1 * rodModifier
     var element = document.getElementById("fishStatus")
     element.innerHTML = fishingText
     var element = document.getElementById("fishCounter")
-    element.innerHTML = "You have " + fish + " fish!"
+    element.innerHTML = "You have " + gameData.fish + " fish!"
     var element = document.getElementById("moneyCounter")
-    element.innerHTML = "You have " + gold + " gold!"
+    element.innerHTML = "You have " + gameData.gold + " gold!"
     var element = document.getElementById("sellNumber")
-    element.innerHTML = "Sell for " + fish * 2 + " gold!"
-    if (rod == 0) {
+    element.innerHTML = "Sell for " + gameData.fish * 2 + " gold!"
+    if (gameData.rod == 0) {
         var element = document.getElementById("rodUpgrade")
-        element.innerHTML = "Beginner Rod (" + rodCost[rod] + " gold)"
-    } else if (rod == 1) {
+        element.innerHTML = "Beginner Rod (" + rodCost[gameData.rod] + " gold)"
+    } else if (gameData.rod == 1) {
         var element = document.getElementById("rodUpgrade")
-        element.innerHTML = "Hobbyist Rod (" + rodCost[rod] + " gold)"
-    } else if (rod == 2) {
+        element.innerHTML = "Hobbyist Rod (" + rodCost[gameData.rod] + " gold)"
+    } else if (gameData.rod == 2) {
         var element = document.getElementById("rodUpgrade")
-        element.innerHTML = "Fisherman's Rod (" + rodCost[rod] + " gold)"
-    } else if (rod == 3) {
+        element.innerHTML = "Fisherman's Rod (" + rodCost[gameData.rod] + " gold)"
+    } else if (gameData.rod == 3) {
         var element = document.getElementById("rodUpgrade")
-        element.innerHTML = "Elite Rod (" + rodCost[rod] + " gold)"
-    } else if (rod == 4) {
+        element.innerHTML = "Elite Rod (" + rodCost[gameData.rod] + " gold)"
+    } else if (gameData.rod == 4) {
         var element = document.getElementById("rodUpgrade")
-        element.innerHTML = "Master Rod (" + rodCost[rod] + " gold)"
+        element.innerHTML = "Master Rod (" + rodCost[gameData.rod] + " gold)"
     }
-    else if (rod == 5) {
+    else if (gameData.rod == 5) {
         var element = document.getElementById("rodUpgrade")
         element.innerHTML = "You've bought all the rods!"
     }
 }
-openTab(event, 'Fish')
+function saveGameData() {
+    localStorage.setItem("gameDataSave", JSON.stringify(gameData))
+}
+openTab('Fish')
